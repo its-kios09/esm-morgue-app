@@ -28,7 +28,7 @@ yarn start --port 5000
 
 Once it is running, a browser window
 should open with the OpenMRS 3 application. Log in and then navigate to
-`/openmrs/spa/home/ehrconfig`.
+`/openmrs/spa/home/morgue`.
 
 # Running tests
 ```
