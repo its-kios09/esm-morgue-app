@@ -14,7 +14,7 @@ For more information, please refer to the
 ```sh
 # Clone the repository
 https://github.com/its-kios09
-git clone git@github.com:its-kios09/esm-ehrconfig-app.git
+git@github.com:its-kios09/esm-morgue-app.git
 
 # to install dependencies
 yarn
