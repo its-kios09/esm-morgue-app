@@ -3395,6 +3395,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@colisweb/rescript-react-icons-gi@npm:*":
+  version: 1.0.0
+  resolution: "@colisweb/rescript-react-icons-gi@npm:1.0.0"
+  dependencies:
+    react-icons: 4.2.0
+  peerDependencies:
+    "@rescript/react": ^0.10.1
+  checksum: 80286ecb0c97eae362bb7eb652a32b8157499bc286514a9b34df2a07b9bdd9dde5ec43d0aa0c2ac19ec6074039e3f2219f6f929607717cf66a6a8def1435086a
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:^0.5.0":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -5509,6 +5520,7 @@ __metadata:
   resolution: "@openmrs/esm-morgue-app@workspace:."
   dependencies:
     "@carbon/react": ^1.33.1
+    "@colisweb/rescript-react-icons-gi": "*"
     "@openmrs/esm-framework": next
     "@openmrs/esm-styleguide": next
     "@playwright/test": ^1.30.0
@@ -20963,6 +20975,15 @@ __metadata:
     react-native:
       optional: true
   checksum: 624c0a0313fac4e0d18560b83c99a8bd0a83abc02e5db8d01984e0643ac409d178668aa3a4720d01f7a0d9520d38598dcbff801d6f69a970bae67461de6cd852
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:4.2.0":
+  version: 4.2.0
+  resolution: "react-icons@npm:4.2.0"
+  peerDependencies:
+    react: "*"
+  checksum: 2b42d9b0ac85a57f8de28819b5f452b2c851f4caec09a855596d47557b775a434802fce1f3dc3811eebf46cf4d7c79fa4650330d5772345d6839f86c83afc01d
   languageName: node
   linkType: hard
 

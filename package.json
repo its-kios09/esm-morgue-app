@@ -58,6 +58,7 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
+    "@colisweb/rescript-react-icons-gi": "*",
     "@openmrs/esm-framework": "next",
     "@openmrs/esm-styleguide": "next",
     "@playwright/test": "^1.30.0",
