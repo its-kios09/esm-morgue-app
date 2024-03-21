@@ -22,8 +22,8 @@ export const Admissionqueue: React.FC = () => {
   const { t } = useTranslation();
   const [currentPageSize, setCurrentPageSize] = useState<number>(10);
 
-  // Dummy data for workListEntries
-  const workListEntries = [
+  // Dummy data for AdmissionWorkListEntries
+  const AdmissionWorkListEntries = [
     {
       id: 1,
       name: "John Doe",
@@ -109,7 +109,7 @@ export const Admissionqueue: React.FC = () => {
 
   const isLoading = false;
 
-  const searchResults = workListEntries.filter(() => {
+  const searchResults = AdmissionWorkListEntries.filter(() => {
     return true; // No filtering applied for now
   });
 
@@ -210,7 +210,7 @@ export const Admissionqueue: React.FC = () => {
                 page={currentPage}
                 pageSize={currentPageSize}
                 pageSizes={pageSizes}
-                totalItems={workListEntries.length}
+                totalItems={AdmissionWorkListEntries.length}
                 onChange={({ pageSize, page }) => {
                   if (pageSize !== currentPageSize) {
                     setCurrentPageSize(pageSize);

@@ -15,14 +15,23 @@ import {
   TableToolbarSearch,
   OverflowMenu,
   OverflowMenuItem,
+  Tile,
+  DatePicker,
+  DatePickerInput,
+  TableToolbarContent,
+  Section,
+  Heading,
+  Button,
 } from "@carbon/react";
 import { usePagination } from "@openmrs/esm-framework";
+import { ArrowRight } from "@carbon/react/icons";
 
 export const Discharged: React.FC = () => {
   const { t } = useTranslation();
   const [currentPageSize, setCurrentPageSize] = useState<number>(10);
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
-  const workListEntries = [
+  const DischargedWorkListEntries = [
     {
       id: 1,
       name: "John Doe",
@@ -117,7 +126,7 @@ export const Discharged: React.FC = () => {
 
   const isLoading = false;
 
-  const searchResults = workListEntries.filter(() => {
+  const searchResults = DischargedWorkListEntries.filter(() => {
     return true; // No filtering applied for now
   });
 
@@ -137,6 +146,7 @@ export const Discharged: React.FC = () => {
           flipped={document?.dir === "rtl"}
           aria-label="overflow-menu"
         >
+          <OverflowMenuItem itemText="View Paid Bill" />
           <OverflowMenuItem itemText="Death Certificate" />
         </OverflowMenu>
       ),
@@ -147,8 +157,6 @@ export const Discharged: React.FC = () => {
     { id: 0, header: t("id", "IDENTIFIER"), key: "id" },
     { id: 2, header: t("name", "NAME"), key: "name" },
     { id: 1, header: t("compartment", "COMPARTMENT"), key: "compartment" },
-    { id: 6, header: t("body-type", "BODY TYPE"), key: "body-type" },
-
     {
       id: 3,
       header: t("date-of-admission", "DATE OF ADMISSION"),
@@ -160,8 +168,43 @@ export const Discharged: React.FC = () => {
       key: "date-of-death",
     },
     { id: 5, header: t("received-by", "RECEIVED BY"), key: "received-by" },
+    { id: 6, header: t("body-type", "BODY TYPE"), key: "body-type" },
     { id: 7, header: t("action", "ACTION"), key: "action" },
   ];
+  const paid_bill_headers = [
+    {
+      key: "service",
+      header: "Service Name",
+    },
+    {
+      key: "amount",
+      header: "Amount",
+    },
+  ];
+  const amount_rows = [
+    {
+      id: "1",
+      service: "Clean Gloves",
+      amount: "100.00",
+    },
+    {
+      id: "2",
+      service: "Chamber charges",
+      amount: "1000.00",
+    },
+  ];
+  const toggleRowExpansion = (rowIndex: number) => {
+    if (
+      rows[rowIndex].action.props.children[0].props.itemText ===
+      "View Paid Bill"
+    ) {
+      if (expandedRow === rowIndex) {
+        setExpandedRow(null);
+      } else {
+        setExpandedRow(rowIndex);
+      }
+    }
+  };
 
   return isLoading ? (
     <DataTableSkeleton />
@@ -184,18 +227,42 @@ export const Discharged: React.FC = () => {
         }) => (
           <>
             <TableContainer {...getTableContainerProps()}>
+              {" "}
               <TableToolbar
                 style={{
                   position: "static",
-                  height: "3rem",
+                  height: "1rem",
                   overflow: "visible",
                   margin: 0,
-                  backgroundColor: "#f4f4f4",
+                  // TODO: add background color to the toolbar
                 }}
               >
-                <TableToolbarSearch />
+                <TableToolbarContent
+                  style={{ margin: 0, position: "relative" }}
+                >
+                  <TableToolbarSearch
+                    style={{
+                      backgroundColor: "#f4f4f4",
+                      position: "absolute",
+                    }}
+                  />
+                  <DatePicker
+                    datePickerType="single"
+                    style={{
+                      position: "absolute",
+                      right: "0",
+                    }}
+                  >
+                    <DatePickerInput
+                      placeholder="mm/dd/yyyy"
+                      id="date-picker-single"
+                      size="md"
+                      style={{ background: "transparent" }}
+                    />
+                  </DatePicker>
+                </TableToolbarContent>
               </TableToolbar>
-              <Table {...getTableProps()} aria-label="sample table">
+              <Table {...getTableProps()} aria-label="discharge table">
                 <TableHead>
                   <TableRow>
                     {headers.map((header, i) => (
@@ -212,11 +279,111 @@ export const Discharged: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   {rows.map((row, rowIndex) => (
-                    <TableRow key={rowIndex} {...getRowProps({ row })}>
-                      {row.cells.map((cell, cellIndex) => (
-                        <TableCell key={cellIndex}>{cell.value}</TableCell>
-                      ))}
-                    </TableRow>
+                    <React.Fragment key={rowIndex}>
+                      <TableRow
+                        {...getRowProps({ row })}
+                        onClick={() => toggleRowExpansion(rowIndex)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {row.cells.map((cell, cellIndex) => (
+                          <TableCell key={cellIndex}>{cell.value}</TableCell>
+                        ))}
+                      </TableRow>
+                      {expandedRow === rowIndex && (
+                        <TableRow>
+                          <TableCell colSpan={tableColumns.length}>
+                            <Tile id="tile-1">
+                              <Section level={5}>
+                                <Heading>Deceased Information</Heading>
+                                <br />
+                                <Section>
+                                  <Heading>Name: John Doe</Heading>
+                                  <Heading>Gender: Male</Heading>
+                                  <Heading>Cause of Death: Accident</Heading>
+                                  <Heading>Tag Number: ABJK001</Heading>
+                                  <Heading>Date of Admissiom: Accident</Heading>
+                                </Section>
+                                <br />
+                                <Button
+                                  kind="tertiary"
+                                  renderIcon={(props) => (
+                                    <ArrowRight size={16} {...props} />
+                                  )}
+                                  iconDescription={t("paid", "paid bill")}
+                                >
+                                  {t("paid-bill", "Print Paid Bill")}
+                                </Button>
+                              </Section>
+                              <br />
+                              <br />
+
+                              <Section level={5}>
+                                <Heading>Bill Information</Heading>
+                                <br />
+                                <DataTable
+                                  rows={amount_rows}
+                                  headers={paid_bill_headers}
+                                >
+                                  {({
+                                    rows,
+                                    headers,
+                                    getHeaderProps,
+                                    getRowProps,
+                                    getTableProps,
+                                    getTableContainerProps,
+                                  }) => (
+                                    <TableContainer
+                                      {...getTableContainerProps()}
+                                      style={{
+                                        maxWidth: "50%",
+                                        maxHeight: "800px",
+                                      }}
+                                    >
+                                      <Table
+                                        {...getTableProps()}
+                                        aria-label="sample table"
+                                        style={{ tableLayout: "fixed" }}
+                                      >
+                                        <TableHead>
+                                          <TableRow>
+                                            {headers.map((header) => (
+                                              <TableHeader
+                                                key={header.key}
+                                                {...getHeaderProps({
+                                                  header,
+                                                })}
+                                              >
+                                                {header.header}
+                                              </TableHeader>
+                                            ))}
+                                          </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                          {rows.map((row) => (
+                                            <TableRow
+                                              key={row.id}
+                                              {...getRowProps({
+                                                row,
+                                              })}
+                                            >
+                                              {row.cells.map((cell) => (
+                                                <TableCell key={cell.id}>
+                                                  {cell.value}
+                                                </TableCell>
+                                              ))}
+                                            </TableRow>
+                                          ))}
+                                        </TableBody>
+                                      </Table>
+                                    </TableContainer>
+                                  )}
+                                </DataTable>
+                              </Section>
+                            </Tile>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </React.Fragment>
                   ))}
                 </TableBody>
               </Table>
@@ -226,11 +393,11 @@ export const Discharged: React.FC = () => {
                 page={currentPage}
                 pageSize={currentPageSize}
                 pageSizes={pageSizes}
-                totalItems={workListEntries.length}
+                totalItems={DischargedWorkListEntries.length}
                 onChange={({ pageSize, page }) => {
                   if (pageSize !== currentPageSize) {
                     setCurrentPageSize(pageSize);
-                    goTo(1); // Go to the first page when changing page size
+                    goTo(1);
                   }
                   if (page !== currentPage) {
                     goTo(page);
@@ -241,6 +408,21 @@ export const Discharged: React.FC = () => {
           </>
         )}
       </DataTable>
+      <style>
+        {`
+        .cds--toolbar-search-container-expandable {
+            right: 19rem;
+          }
+
+        .cds--search-input:focus {
+            outline: 2px solid #00473F;
+          }
+
+        .cds--toolbar-search-container-active.cds--search {
+            width: 83.4%;
+          }
+  `}
+      </style>
     </div>
   );
 };
