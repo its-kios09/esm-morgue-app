@@ -469,7 +469,7 @@ export const AdmittedQueue: React.FC = () => {
           }
 
         .cds--toolbar-search-container-active.cds--search {
-            width: 83.4%;
+            width: 81.2%;
           }
   `}
       </style>

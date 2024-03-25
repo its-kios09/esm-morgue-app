@@ -408,21 +408,6 @@ export const Discharged: React.FC = () => {
           </>
         )}
       </DataTable>
-      <style>
-        {`
-        .cds--toolbar-search-container-expandable {
-            right: 19rem;
-          }
-
-        .cds--search-input:focus {
-            outline: 2px solid #00473F;
-          }
-
-        .cds--toolbar-search-container-active.cds--search {
-            width: 83.4%;
-          }
-  `}
-      </style>
     </div>
   );
 };

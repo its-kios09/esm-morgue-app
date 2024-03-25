@@ -174,7 +174,7 @@ export const Admissionqueue: React.FC = () => {
                   height: "3rem",
                   overflow: "visible",
                   margin: 0,
-                  backgroundColor: "#f4f4f4",
+                  backgroundColor: "transparent",
                 }}
               >
                 <TableToolbarSearch />
@@ -214,7 +214,7 @@ export const Admissionqueue: React.FC = () => {
                 onChange={({ pageSize, page }) => {
                   if (pageSize !== currentPageSize) {
                     setCurrentPageSize(pageSize);
-                    goTo(1); // Go to the first page when changing page size
+                    goTo(1);
                   }
                   if (page !== currentPage) {
                     goTo(page);
