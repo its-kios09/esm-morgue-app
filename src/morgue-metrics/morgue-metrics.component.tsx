@@ -15,7 +15,7 @@ function MorgueMetrics() {
   return (
     <>
       <MetricsHeader />
-      <div className={styles.cardContainer} data-testid="clinic-metrics">
+      <div className={styles.cardContainer} data-testid="morgue-metrics">
         <MetricsCard
           label={t("queue", "Total bodies in queue")}
           value={"0"}
