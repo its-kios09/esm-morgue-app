@@ -7,6 +7,9 @@ For more information, please refer to the
 
 ### Dashboard
 
+![Screenshot from 2024-03-25 18-21-47](https://github.com/its-kios09/esm-morgue-app/assets/67967749/17fb7a0f-d0b1-4f38-b06b-680e3bf6ea25)
+
+
 
 # Getting Started
 
